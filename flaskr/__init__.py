@@ -21,8 +21,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from .views import auth
+    from .views import auth, dashboard
     app.register_blueprint(blueprint=auth.bp)
+    app.register_blueprint(blueprint=dashboard.bp)
 
     # a simple page that says hello
     @app.route(rule='/health')

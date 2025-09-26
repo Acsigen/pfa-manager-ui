@@ -29,25 +29,32 @@
         </nav>
         <hr>
         <div class="container is-max-desktop">
-            <form action="http://ideacentre.local:8000/auth" class="box">
+
+            {% if error %}
+            <div class="notification is-danger is-light box">
+                Error: {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/auth/login" method="post" class="box">
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="e.g. alex@example.com" />
+                        <input class="input" type="email" placeholder="e.g. john.doe@example.com" id="username"
+                            name="username" required />
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Password</label>
                     <div class="control">
-                        <input class="input" type="password" placeholder="********" />
+                        <input class="input" type="password" placeholder="********" id="password"
+                            name="password" required/>
                     </div>
                 </div>
-
                 <button class="button is-primary">Sign in</button>
             </form>
         </div>
     </section>
 </body>
-
 </html>

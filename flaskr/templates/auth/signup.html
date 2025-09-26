@@ -22,13 +22,13 @@
             {% for message in messages %}
             <ul class="notification is-success is-light box">
                 <li>
-                        {{ message }}
+                    {{ message }}
                 </li>
             </ul>
             {% endfor %}
             {% endif %}
             {% endwith %}
-            
+
             {% if error %}
             <div class="notification is-danger is-light box">
                 Error: {{ error }}
@@ -39,16 +39,14 @@
                 <div class="field">
                     <label class="label" for="first_name">First Name *</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="John" value="test" id="first_name"
-                            name="first_name" required>
+                        <input class="input" type="text" placeholder="John" id="first_name" name="first_name" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label" for="last_name">Last Name *</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Doe" value="test" id="last_name" name="last_name"
-                            required>
+                        <input class="input" type="text" placeholder="Doe" id="last_name" name="last_name" required>
                     </div>
                 </div>
 
@@ -63,16 +61,16 @@
                 <div class="field">
                     <label class="label">Email *</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="john.doe@example.com" value="test@example.com"
-                            id="email_address" name="email_address" required>
+                        <input class="input" type="email" placeholder="john.doe@example.com" id="email_address"
+                            name="email_address" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Password *</label>
                     <div class="control">
-                        <input class="input" type="password" placeholder="********" value="test" id="password"
-                            name="password" required>
+                        <input class="input" type="password" placeholder="********" id="password" name="password"
+                            required>
                     </div>
                 </div>
 

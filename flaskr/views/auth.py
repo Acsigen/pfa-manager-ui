@@ -23,64 +23,38 @@ def add_header(r):
 @bp.route(rule='/signup', methods=('GET', 'POST'))
 def signup():
     error = ""
-    if request.method == 'POST':
-        data = request.form
-        res: requests.Response = requests.post(url="http://ideacentre.local:8000/signup", data=json.dumps(obj=data))
-        if res.status_code == 201:
-            flash(message='User registered')
-            return redirect(location=url_for(endpoint='auth.signup'))
-        else:
-            error: str = "Cannot create user."
-    return render_template(template_name_or_list='auth/signup.html', error=error)
-    #     username = request.form['username']
-    #     password = request.form['password']
-    #     error = None
-
-        # if not username:
-        #     error = 'Username is required.'
-        # elif not password:
-        #     error = 'Password is required.'
-
-        # if error is None:
-        #     try:
-        #         db.execute(
-        #             "INSERT INTO user (username, password) VALUES (?, ?)",
-        #             (username, generate_password_hash(password)),
-        #         )
-        #         db.commit()
-        #     except db.IntegrityError:
-        #         error = f"User {username} is already registered."
-        #     else:
-        #         return redirect(url_for("auth.login"))
-
-        # flash(error)
-
-    return render_template(template_name_or_list='auth/signup.html')
+    if "auth_token" not in session:
+        if request.method == 'POST':
+            data = request.form
+            res: requests.Response = requests.post(url="http://ideacentre.local:8000/signup", data=json.dumps(obj=data))
+            if res.status_code == 201:
+                flash(message='User registered')
+                return redirect(location=url_for(endpoint='auth.signup'))
+            else:
+                error: str = "Cannot create user."
+        return render_template(template_name_or_list='auth/signup.html', error=error)
+    return redirect(location=url_for(endpoint='auth.login'))
 
 @bp.route(rule='/login', methods=('GET', 'POST'))
 def login():
-#     if request.method == 'POST':
-#         username = request.form['username']
-#         password = request.form['password']
-#         db = get_db()
-#         error = None
-#         user = db.execute(
-#             'SELECT * FROM user WHERE username = ?', (username,)
-#         ).fetchone()
+    error = ""
+    # TODO: Check token validity before redirect. We might have an expired token. We will need an endpoint from the API to validate our token externally not only internally
+    if "auth_token" not in session.keys():
+        if request.method == 'POST':
+            data = request.form.to_dict()
+            data["grant_type"] = "password"
+            headers = {
+                "accept": "application/json"
+            }
+            res: requests.Response = requests.post(url="http://ideacentre.local:8000/auth", data=data, headers=headers)
+            if res.status_code == 200:
+                session["auth_token"] = res.json()["access_token"]
+                return redirect(location=url_for(endpoint='dashboard.dashboard'))
+            else:
+                error: str = "Invalid Credentials"
+            return render_template(template_name_or_list='auth/login.html', error=error)
+    return redirect(location=url_for(endpoint='dashboard.dashboard'))
 
-#         if user is None:
-#             error = 'Incorrect username.'
-#         elif not check_password_hash(user['password'], password):
-#             error = 'Incorrect password.'
-
-#         if error is None:
-#             session.clear()
-#             session['user_id'] = user['id']
-#             return redirect(url_for('index'))
-
-#         flash(error)
-
-    return render_template(template_name_or_list='auth/login.html')
 
 # @bp.route('/logout')
 # def logout():
