@@ -52,14 +52,14 @@ def login():
                 return redirect(location=url_for(endpoint='dashboard.dashboard'))
             else:
                 error: str = "Invalid Credentials"
-            return render_template(template_name_or_list='auth/login.html', error=error)
+        return render_template(template_name_or_list='auth/login.html', error=error)
     return redirect(location=url_for(endpoint='dashboard.dashboard'))
 
 
-# @bp.route('/logout')
-# def logout():
-#     session.clear()
-#     return redirect(url_for('index'))
+@bp.route(rule='/logout', methods=["GET"])
+def logout():
+    session.clear()
+    return redirect(location=url_for(endpoint='auth.login'))
 
 
 # def login_required(view):
