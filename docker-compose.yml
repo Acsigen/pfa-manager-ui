@@ -1,0 +1,15 @@
+services:
+  pfa-manager-ui:
+    image: acsigen/pfa-manager-ui
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - acsigen/pfa-manager-ui:v0.1.0
+        - acsigen/pfa-manager-ui:latest
+    container_name: pfa-manager-ui
+    restart: unless-stopped
+    user: 1000:1000
+    tty: true
+    ports:
+      - 8000:8000
