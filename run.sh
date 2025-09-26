@@ -2,4 +2,4 @@
 
 source ./.venv/bin/activate
 
-flask --app flaskr run --debug
+flask --app web run --debug
