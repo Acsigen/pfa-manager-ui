@@ -23,7 +23,7 @@ def add_header(r):
 @bp.route(rule='/signup', methods=('GET', 'POST'))
 def signup():
     error = ""
-    if "auth_token" not in session:
+    if "auth_token" not in session.keys():
         if request.method == 'POST':
             data = request.form
             res: requests.Response = requests.post(url="http://ideacentre.local:8000/signup", data=json.dumps(obj=data))

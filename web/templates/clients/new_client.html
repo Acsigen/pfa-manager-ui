@@ -1,0 +1,80 @@
+{% include '../base/header.html' %}
+
+<body>
+    <section class="section">
+        <nav>
+            <ul>
+                <li><a class="button is-primary is-outlined" href="/clients">Back</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="container is-max-desktop">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <ul class="notification is-success is-light box">
+                <li>
+                    {{ message }}
+                </li>
+            </ul>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% if error %}
+            <div class="notification is-danger is-light box">
+                Error: {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/clients" method="post" class="box">
+                <div class="field">
+                    <label class="label" for="first_name">First Name *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="John" id="first_name" name="first_name" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="last_name">Last Name *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Doe" id="last_name" name="last_name" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Phone Number</label>
+                    <div class="control">
+                        <input class="input" type="tel" placeholder="+40712345678" id="phone_number"
+                            name="phone_number">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Email *</label>
+                    <div class="control">
+                        <input class="input" type="email" placeholder="john.doe@example.com" id="email_address"
+                            name="email_address" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Password *</label>
+                    <div class="control">
+                        <input class="input" type="password" placeholder="********" id="password" name="password"
+                            required>
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</body>
+
+{% include '../base/footer.html' %}

@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard | Home</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-</head>
+{% include 'base/header.html' %}
 
 <body>
     <section class="section">
@@ -25,8 +17,8 @@
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item" href="/clients">
+                <div class="navbar-start is-active">
+                    <a class="navbar-item is-active" href="#">
                         Clients
                     </a>
 
@@ -48,7 +40,7 @@
                             <a class="navbar-item" href="#">
                                 Settings
                             </a>
-                            
+
                             <a class="navbar-item" href="/auth/logout">
                                 Logout
                             </a>
@@ -59,33 +51,39 @@
         </nav>
         <hr>
         <div class="container is-max-desktop">
-            <div class="notification is-inactive is-light box">
-                No Content for now
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li class="is-active"><a href="/clients" aria-current="page">Clients</a></li>
+                </ul>
+            </nav>
+            <hr>
+            <div class="buttons is-right">
+                <a class="button is-primary" href="/clients/add">Add</a>
             </div>
+            <table class="table is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>CUI</th>
+                        <th>ONRC</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in client_list %}
+                    <tr>
+                        <th>{{ client.name }}</th>
+
+                        <td>{{ client.cui }}</td>
+                        <td>{{ client.onrc_no }}</td>
+                        <td> Actions placeholder</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+
     </section>
 </body>
-<footer>
-    <script>document.addEventListener('DOMContentLoaded', () => {
 
-            // Get all "navbar-burger" elements
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-            // Add a click event on each of them
-            $navbarBurgers.forEach(el => {
-                el.addEventListener('click', () => {
-
-                    // Get the target from the "data-target" attribute
-                    const target = el.dataset.target;
-                    const $target = document.getElementById(target);
-
-                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                    el.classList.toggle('is-active');
-                    $target.classList.toggle('is-active');
-
-                });
-            });
-
-        });</script>
-</footer>
-</html>
+{% include 'base/footer.html' %}
