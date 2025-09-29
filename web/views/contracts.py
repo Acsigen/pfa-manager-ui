@@ -6,7 +6,7 @@ from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
 )
 
-bp = Blueprint(name='contracts', import_name=__name__, url_prefix='/clients')
+bp = Blueprint(name='contracts', import_name=__name__)
 
 @bp.after_request
 def add_header(r):
@@ -20,7 +20,7 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
-@bp.route(rule='/<int:client_id>/contracts', methods=['GET'])
+@bp.route(rule='/clients/<int:client_id>/contracts', methods=['GET'])
 def contracts(client_id: int):
     error = ""
     if "auth_token" not in session.keys():
@@ -42,7 +42,7 @@ def contracts(client_id: int):
     
     return render_template(template_name_or_list='contracts/list.html', error=error, contract_list=contract_list, client_id=client_id)
 
-@bp.route(rule='/<int:client_id>/contracts/add', methods=('GET','POST'))
+@bp.route(rule='/clients/<int:client_id>/contracts/add', methods=('GET','POST'))
 def add(client_id: int):
     error = ""
     if "auth_token" not in session.keys():
@@ -64,7 +64,7 @@ def add(client_id: int):
             error: str = "Cannot register contract."
     return render_template(template_name_or_list='contracts/new.html', error=error, client_id=client_id)
 
-@bp.route(rule='/<int:client_id>/contracts/<int:contract_id>/view', methods=['GET'])
+@bp.route(rule='/clients/<int:client_id>/contracts/<int:contract_id>/view', methods=['GET'])
 def view(client_id: int, contract_id: int):
     error = ""
     if "auth_token" not in session.keys():
@@ -84,7 +84,7 @@ def view(client_id: int, contract_id: int):
         error: str = "Cannot display client."
     return render_template(template_name_or_list='contracts/details.html', error=error, client_id=client_id, contract_id=contract_id)
 
-@bp.route(rule='/<int:client_id>/contracts/<int:contract_id>/edit', methods=('GET','POST'))
+@bp.route(rule='/clients/<int:client_id>/contracts/<int:contract_id>/edit', methods=('GET','POST'))
 def edit(client_id: int, contract_id: int):
     error = ""
     if "auth_token" not in session.keys():
@@ -110,7 +110,7 @@ def edit(client_id: int, contract_id: int):
     res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts/{contract_id}", headers=headers)
     if res.status_code == 200:
         contract_details: dict = res.json()
-        return render_template(template_name_or_list='contracts/edit.html', error=error, contract=contract_details)
+        return render_template(template_name_or_list='contracts/edit.html', error=error, contract=contract_details, client_id=client_id)
     elif res.status_code == 401:
         session.clear()
         return redirect(location=url_for(endpoint='auth.login'))
