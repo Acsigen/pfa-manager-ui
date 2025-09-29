@@ -7,8 +7,7 @@ bp = Blueprint(name='dashboard', import_name=__name__, url_prefix='/dashboard')
 @bp.after_request
 def add_header(r):
     """
-    Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
+    Add headers for browser cache disabling
     """
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"
