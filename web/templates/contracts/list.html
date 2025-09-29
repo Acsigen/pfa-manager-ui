@@ -53,34 +53,38 @@
         <div class="container is-max-desktop">
             <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul>
-                    <li class="is-active"><a href="/clients" aria-current="page">Clients</a></li>
+                    <li><a href="/clients" aria-current="page">Clients</a></li>
+                    <li class="is-active"><a href="/clients/2/contracts" aria-current="page">Contracts</a></li>
                 </ul>
             </nav>
             <hr>
             <div class="buttons is-right">
-                <a class="button is-primary" href="/clients/add">Add</a>
+                <a class="button is-primary" href="/clients/{{ client_id }}/contracts/add">Add</a>
             </div>
             <table class="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>CUI</th>
-                        <th>ONRC</th>
+                        <th>Contract No.</th>
+                        <th>Description</th>
+                        <th>Cloud Storage URL</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for client in client_list %}
+                    {% for contract in contract_list %}
                     <tr>
-                        <th>{{ client.name }}</th>
+                        <th>{{ contract.contract_no }}</th>
 
-                        <td>{{ client.cui }}</td>
-                        <td>{{ client.onrc_no }}</td>
+                        <td>{{ contract.description }}</td>
+                        <td>
+                            <a class="button is-link is-small is-rounded"
+                                href="{{ contract.cloud_storage_url }}" target="_blank">One Drive</a>
+                        </td>
                         <td>
                             <div class="buttons">
-                                <a class="button is-link is-small is-rounded" href="/clients/{{ client.id }}/contracts">Contracts</a>
-                                <a class="button is-info is-small is-rounded" href="/clients/{{ client.id }}/view">View</a>
-                                <a class="button is-warning is-small is-rounded" href="/clients/{{ client.id }}/edit">Edit</a>
+                                <a class="button is-link is-small is-rounded" href="#">Work Orders</a>
+                                <a class="button is-info is-small is-rounded" href="/clients/{{ contract.client_id }}/contracts/{{ contract.id }}/view">View</a>
+                                <a class="button is-warning is-small is-rounded" href="/clients/{{ contract.client_id }}/contracts/{{ contract.id }}/edit">Edit</a>
                                 <a class="button is-danger is-small is-rounded" href="#">Delete</a>
                             </div>
                         </td>

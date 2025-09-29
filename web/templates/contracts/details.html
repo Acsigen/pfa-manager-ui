@@ -1,0 +1,51 @@
+{% include 'base/header.html' %}
+
+<body>
+    <section class="section">
+        <nav>
+            <ul>
+                <li><a class="button is-primary is-outlined" href="/clients/{{ client_id }}/contracts">Back</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="container is-max-desktop">
+            {% if error %}
+            <div class="notification is-danger is-light box">
+                Error: {{ error }}
+            </div>
+            {% endif %}
+
+            <form class="box">
+                <div class="field">
+                    <label class="label" for="contract_no">Contract No. *</label>
+                    <div class="control">
+                        <input class="input" type="text" id="contract_no" name="contract_no" value="{{ contract.contract_no}}" readonly>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="start_date">Start Date *</label>
+                    <div class="control">
+                        <input class="input" type="date" id="start_date" name="start_date" value="{{ contract.start_date }}" readonly>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="end_date">End Date *</label>
+                    <div class="control">
+                        <input class="input" type="date" id="end_date" name="end_date" value="{{ contract.end_date}}" readonly>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <input class="input" type="text" id="description"
+                        name="description" value="{{ contract.description }}" readonly>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</body>
+
+{% include 'base/footer.html' %}

@@ -1,7 +1,6 @@
 # import functools
 import requests
 import json
-from time import sleep
 
 from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
@@ -35,6 +34,7 @@ def clients():
     if res.status_code == 200:
         client_list = res.json()
     elif res.status_code == 401:
+        session.clear()
         return redirect(location=url_for(endpoint='auth.login'))
     else:
         error: str = "Cannot display clients"
@@ -58,6 +58,9 @@ def add():
         if res.status_code == 200:
             flash(message='Client Added')
             return redirect(location=url_for(endpoint='clients.clients'))
+        elif res.status_code == 401:
+            session.clear()
+            return redirect(location=url_for(endpoint='auth.login'))
         else:
             error: str = "Cannot register client."
     return render_template(template_name_or_list='clients/new_client.html', error=error)
