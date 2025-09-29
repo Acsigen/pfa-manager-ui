@@ -57,7 +57,6 @@ def add():
         # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
         if res.status_code == 200:
             flash(message='Client Added')
-            sleep(2)
             return redirect(location=url_for(endpoint='clients.clients'))
         else:
             error: str = "Cannot register client."
@@ -78,6 +77,7 @@ def view(client_id: int):
         client_details: dict = res.json()
         return render_template(template_name_or_list='clients/client_details.html', error=error, client_details=client_details)
     elif res.status_code == 401:
+        session.clear()
         return redirect(location=url_for(endpoint='auth.login'))
     else:
         error: str = "Cannot display client."
@@ -101,6 +101,7 @@ def edit(client_id: int):
             flash(message="Client updated")
             return render_template(template_name_or_list='clients/edit_client.html', error=error)
         elif res.status_code == 401:
+            session.clear()
             return redirect(location=url_for(endpoint='auth.login'))
         else:
             error: str = res.text
@@ -111,6 +112,7 @@ def edit(client_id: int):
         client_details: dict = res.json()
         return render_template(template_name_or_list='clients/edit_client.html', error=error, client_details=client_details)
     elif res.status_code == 401:
+        session.clear()
         return redirect(location=url_for(endpoint='auth.login'))
     else:
         error: str = "Cannot display client."
