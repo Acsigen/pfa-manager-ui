@@ -1,9 +1,5 @@
-import functools
-import requests
-import json
-
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, redirect, render_template, session, url_for
 )
 
 bp = Blueprint(name='dashboard', import_name=__name__, url_prefix='/dashboard')

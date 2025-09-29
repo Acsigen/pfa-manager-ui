@@ -1,4 +1,4 @@
-{% include '../base/header.html' %}
+{% include 'base/header.html' %}
 
 <body>
     <section class="section">
@@ -27,18 +27,32 @@
             </div>
             {% endif %}
 
-            <form action="/clients" method="post" class="box">
+            <form action="/clients/add" method="post" class="box">
                 <div class="field">
-                    <label class="label" for="first_name">First Name *</label>
+                    <label class="label" for="name">Name *</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="John" id="first_name" name="first_name" required>
+                        <input class="input" type="text" placeholder="Microsoft" id="name" name="name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="address">Address *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="15010 NE 36th Street, Redmond, WA 98052, USA" id="address" name="address" required>
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label" for="last_name">Last Name *</label>
+                    <label class="label">Contact Person *</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="Doe" id="last_name" name="last_name" required>
+                        <input class="input" type="email" placeholder="john.doe@example.com" id="contact_person"
+                        name="contact_person" required>
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label class="label" for="address">Country *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="United States of America" id="country" name="country" required>
                     </div>
                 </div>
 
@@ -51,18 +65,18 @@
                 </div>
 
                 <div class="field">
-                    <label class="label">Email *</label>
+                    <label class="label">ONRC Registration Number *</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="john.doe@example.com" id="email_address"
-                            name="email_address" required>
+                        <input class="input" type="text" placeholder="J200100234540C" id="onrc_no" name="onrc_no"
+                            required>
                     </div>
                 </div>
-
+                
                 <div class="field">
-                    <label class="label">Password *</label>
+                    <label class="label">Tax Code (CUI) *</label>
                     <div class="control">
-                        <input class="input" type="password" placeholder="********" id="password" name="password"
-                            required>
+                        <input class="input" type="text" placeholder="6859662" id="cui" name="cui"
+                        required>
                     </div>
                 </div>
 
@@ -77,4 +91,4 @@
     </section>
 </body>
 
-{% include '../base/footer.html' %}
+{% include 'base/footer.html' %}

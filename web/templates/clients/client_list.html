@@ -17,8 +17,8 @@
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start is-active">
-                    <a class="navbar-item is-active" href="#">
+                <div class="navbar-start">
+                    <a class="navbar-item is-active" style="color: #F2F2F2;" href="#">
                         Clients
                     </a>
 
@@ -76,7 +76,13 @@
 
                         <td>{{ client.cui }}</td>
                         <td>{{ client.onrc_no }}</td>
-                        <td> Actions placeholder</td>
+                        <td>
+                            <div class="buttons">
+                                <a class="button is-info is-small is-rounded" href="/clients/{{ client.id }}/view">View</a>
+                                <a class="button is-warning is-small is-rounded" href="/clients/{{ client.id }}/edit">Edit</a>
+                                <a class="button is-danger is-small is-rounded" href="/clients/{{ client.id }}/delete">Delete</a>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

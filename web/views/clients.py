@@ -1,8 +1,10 @@
-import functools
+# import functools
 import requests
+import json
+from time import sleep
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, redirect, render_template, request, session, url_for
 )
 
 bp = Blueprint(name='clients', import_name=__name__, url_prefix='/clients')
@@ -19,23 +21,12 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
-@bp.route(rule='/', methods=('GET', 'POST'))
+@bp.route(rule='/', methods=['GET'])
 def clients():
     error = ""
     if "auth_token" not in session.keys():
         return redirect(location=url_for(endpoint='auth.login'))
-    if request.method == 'POST':
-        data = request.form.to_dict()
-        headers = {
-            "Authorization": f"Bearer {session.get("auth_token")}"
-        }
-        res: requests.Response = requests.post(url="http://ideacentre.local:8000/clients", data=data, headers=headers)
-        if res.status_code == 201:
-            flash(message='Client Added')
-            return redirect(location=url_for(endpoint='clients.clients'))
-        else:
-            error: str = "Cannot register client."
-
+    
     client_list: list[dict] = []
     headers = {
         "Authorization": f"Bearer {session.get("auth_token")}"
@@ -43,7 +34,31 @@ def clients():
     res: requests.Response = requests.get(url="http://ideacentre.local:8000/api/v1/clients", headers=headers)
     if res.status_code == 200:
         client_list = res.json()
+    elif res.status_code == 401:
+        return redirect(location=url_for(endpoint='auth.login'))
     else:
         error: str = "Cannot display clients"
         return render_template(template_name_or_list='clients/client_list.html', error=error)
+    
     return render_template(template_name_or_list='clients/client_list.html', error=error, client_list=client_list)
+
+@bp.route(rule='/add', methods=('GET','POST'))
+def add():
+    error = ""
+    if "auth_token" not in session.keys():
+        return redirect(location=url_for(endpoint='auth.login'))
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        print(data)
+        headers = {
+            "Authorization": f"Bearer {session.get("auth_token")}"
+        }
+        res: requests.Response = requests.post(url="http://ideacentre.local:8000/api/v1/clients", data=json.dumps(data), headers=headers)
+        # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
+        if res.status_code == 200:
+            flash(message='Client Added')
+            sleep(2)
+            return redirect(location=url_for(endpoint='clients.clients'))
+        else:
+            error: str = "Cannot register client."
+    return render_template(template_name_or_list='clients/new_client.html', error=error)
