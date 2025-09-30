@@ -56,7 +56,7 @@ def add(client_id: int):
         # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
         if res.status_code == 200:
             flash(message='Contract Added')
-            return redirect(location=url_for(endpoint='contracts.contracts'))
+            return redirect(location=url_for(endpoint='contracts.contracts', client_id=client_id))
         elif res.status_code == 401:
             session.clear()
             return redirect(location=url_for(endpoint='auth.login'))
