@@ -49,7 +49,6 @@ def add():
         return redirect(location=url_for(endpoint='auth.login'))
     if request.method == 'POST':
         data = request.form.to_dict()
-        print(data)
         headers = {
             "Authorization": f"Bearer {session.get("auth_token")}"
         }

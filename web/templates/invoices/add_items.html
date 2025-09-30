@@ -1,0 +1,57 @@
+{% include 'base/header.html' %}
+
+<body>
+    <section class="section">
+        <nav>
+            <ul>
+                <li><a class="button is-primary is-outlined" href="/invoices">Back</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="container is-max-desktop">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <ul class="notification is-success is-light box">
+                <li>
+                    {{ message }}
+                </li>
+            </ul>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% if error %}
+            <div class="notification is-danger is-light box">
+                Error: {{ error }}
+            </div>
+            {% endif %}
+
+            {% if available_items %}
+            <form action="/invoices/{{ invoice_id }}/items" method="post" class="box">
+                <div class="field">
+                    {% for item in available_items %}
+                    <label class="checkbox">
+                        <input type="checkbox" />
+                        {{ item.name }}
+                    </label>
+                    {% endfor %}
+                </div>
+                
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+            {% else %}
+            <div class="notification is-inactive is-light box">
+                No activity reports available for invoicing.
+            </div>
+            {% endif %}
+        </div>
+
+    </section>
+</body>
+
+{% include 'base/footer.html' %}

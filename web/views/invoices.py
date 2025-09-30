@@ -82,6 +82,48 @@ def add():
         return render_template(template_name_or_list='invoices/new.html', error=error)
     return render_template(template_name_or_list='invoices/new.html', error=error, client_list=client_list)
 
+# TODO: Get activity reports that can be added to the invoice
+@bp.route(rule='/<int:invoice_id>/items', methods=('GET','POST'))
+def add_invoice_items(invoice_id: int):
+    error = ""
+    if "auth_token" not in session.keys():
+        return redirect(location=url_for(endpoint='auth.login'))
+    headers: dict = {
+        "Authorization": f"Bearer {session.get("auth_token")}"
+    }
+    # if request.method == 'POST':
+    #     data: dict = request.form.to_dict()
+    #     res: requests.Response = requests.post(url="http://ideacentre.local:8000/api/v1/invoices", data=json.dumps(obj=data), headers=headers)
+    #     # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
+    #     if res.status_code == 200:
+    #         flash(message='Invoice Added')
+    #         return redirect(location=url_for(endpoint='invoices.invoices'))
+    #     elif res.status_code == 401:
+    #         session.clear()
+    #         return redirect(location=url_for(endpoint='auth.login'))
+    #     else:
+    #         error: str = "Cannot register invoice."
+    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}", headers=headers)
+    if res.status_code == 200:
+        invoice: dict = res.json()
+        invoice.pop("user_id")
+        res: requests.Response = requests.post(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}/available_items", headers=headers, data=json.dumps(obj=invoice))
+        if res.status_code == 200:
+            available_items: list = res.json()
+        elif res.status_code == 401:
+            session.clear()
+            return redirect(location=url_for(endpoint='auth.login'))
+        else:
+            error: str = "Cannot display available items"
+            return render_template(template_name_or_list='invoices/add_items.html', error=error)
+    elif res.status_code == 401:
+        session.clear()
+        return redirect(location=url_for(endpoint='auth.login'))
+    else:
+        error: str = "Cannot display invoices"
+        return render_template(template_name_or_list='invoices/add_items.html', error=error)
+    return render_template(template_name_or_list='invoices/add_items.html', error=error, available_items=available_items)
+
 # @bp.route(rule='/<int:client_id>/view', methods=['GET'])
 # def view(client_id: int):
 #     client_id = client_id
