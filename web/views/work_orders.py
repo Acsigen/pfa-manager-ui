@@ -70,25 +70,25 @@ def add(client_id: int, contract_id: int):
             error: str = "Cannot register work order."
     return render_template(template_name_or_list='work_orders/new.html', error=error, client_id=client_id, contract_id=contract_id)
 
-# @bp.route(rule='/<int:client_id>/contracts/<int:contract_id>/view', methods=['GET'])
-# def view(client_id: int, contract_id: int):
-#     error = ""
-#     if "auth_token" not in session.keys():
-#         return redirect(location=url_for(endpoint='auth.login'))
+@bp.route(rule='/clients/<int:client_id>/contracts/<int:contract_id>/wo/<int:wo_id>/view', methods=['GET'])
+def view(client_id: int, contract_id: int, wo_id: int):
+    error = ""
+    if "auth_token" not in session.keys():
+        return redirect(location=url_for(endpoint='auth.login'))
 
-#     headers = {
-#         "Authorization": f"Bearer {session.get("auth_token")}"
-#     }
-#     res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts/{contract_id}", headers=headers)
-#     if res.status_code == 200:
-#         client_details: dict = res.json()
-#         return render_template(template_name_or_list='contracts/details.html', error=error, contract=client_details, client_id=client_id)
-#     elif res.status_code == 401:
-#         session.clear()
-#         return redirect(location=url_for(endpoint='auth.login'))
-#     else:
-#         error: str = "Cannot display client."
-#     return render_template(template_name_or_list='contracts/details.html', error=error, client_id=client_id, contract_id=contract_id)
+    headers = {
+        "Authorization": f"Bearer {session.get("auth_token")}"
+    }
+    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts/{contract_id}/wo/{wo_id}", headers=headers)
+    if res.status_code == 200:
+        wo_details: dict = res.json()
+        return render_template(template_name_or_list='work_orders/details.html', error=error, wo=wo_details, client_id=client_id,contract_id=contract_id, wo_id=wo_id)
+    elif res.status_code == 401:
+        session.clear()
+        return redirect(location=url_for(endpoint='auth.login'))
+    else:
+        error: str = "Cannot display work order."
+    return render_template(template_name_or_list='work_orders/details.html', error=error, client_id=client_id, contract_id=contract_id, wo_id=wo_id)
 
 @bp.route(rule='/clients/<int:client_id>/contracts/<int:contract_id>/wo/<int:wo_id>/edit', methods=('GET','POST'))
 def edit(client_id: int, contract_id: int, wo_id: int):
