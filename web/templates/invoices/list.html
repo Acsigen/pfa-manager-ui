@@ -18,11 +18,11 @@
 
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item is-active" style="color: #F2F2F2;" href="#">
+                    <a class="navbar-item" href="/clients">
                         Clients
                     </a>
 
-                    <a class="navbar-item" href="/invoices">
+                    <a class="navbar-item is-active" style="color: #F2F2F2;" href="#">
                         Invoices
                     </a>
                 </div>
@@ -51,37 +51,35 @@
         </nav>
         <hr>
         <div class="container is-max-desktop">
-            <nav class="breadcrumb" aria-label="breadcrumbs">
-                <ul>
-                    <li class="is-active"><a href="/clients" aria-current="page">Clients</a></li>
-                </ul>
-            </nav>
-            <hr>
             <div class="buttons is-right">
-                <a class="button is-primary" href="/clients/add">Add</a>
+                <a class="button is-primary" href="/invoices/add">Add</a>
             </div>
             <table class="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>CUI</th>
-                        <th>ONRC</th>
+                        <th>Client</th>
+                        <th>Issue Date</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for client in client_list %}
+                    {% for invoice in invoice_list %}
                     <tr>
-                        <th>{{ client.name }}</th>
-
-                        <td>{{ client.cui }}</td>
-                        <td>{{ client.onrc_no }}</td>
+                        <th>{{ invoice.name }}</th>
+                        <td>{{ invoice.client_name }}</td>
+                        <td>{{ invoice.invoice_date }}</td>
+                        <td>{{ invoice.status }}</td>
                         <td>
                             <div class="buttons">
-                                <a class="button is-link is-small is-rounded" href="/clients/{{ client.id }}/contracts">Contracts</a>
-                                <a class="button is-info is-small is-rounded" href="/clients/{{ client.id }}/view">View</a>
-                                <a class="button is-warning is-small is-rounded" href="/clients/{{ client.id }}/edit">Edit</a>
+                                <!-- TODO: the items will be a checkbox form on the add items page -->
+                                <a class="button is-link is-small is-rounded" href="#">Add Items</a>
+                                <a class="button is-info is-small is-rounded" href="#">View</a>
+                                {% if invoice.status == "Draft" %}
+                                <a class="button is-warning is-small is-rounded" href="#">Edit</a>
                                 <a class="button is-danger is-small is-rounded" href="#">Delete</a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>
