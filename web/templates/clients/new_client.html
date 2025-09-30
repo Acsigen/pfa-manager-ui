@@ -1,0 +1,94 @@
+{% include 'base/header.html' %}
+
+<body>
+    <section class="section">
+        <nav>
+            <ul>
+                <li><a class="button is-primary is-outlined" href="/clients">Back</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="container is-max-desktop">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <ul class="notification is-success is-light box">
+                <li>
+                    {{ message }}
+                </li>
+            </ul>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% if error %}
+            <div class="notification is-danger is-light box">
+                Error: {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/clients/add" method="post" class="box">
+                <div class="field">
+                    <label class="label" for="name">Name *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Microsoft" id="name" name="name" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="address">Address *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="15010 NE 36th Street, Redmond, WA 98052, USA" id="address" name="address" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Contact Person *</label>
+                    <div class="control">
+                        <input class="input" type="email" placeholder="john.doe@example.com" id="contact_person"
+                        name="contact_person" required>
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label class="label" for="address">Country *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="United States of America" id="country" name="country" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Phone Number</label>
+                    <div class="control">
+                        <input class="input" type="tel" placeholder="+40712345678" id="phone_number"
+                            name="phone_number">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">ONRC Registration Number *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="J200100234540C" id="onrc_no" name="onrc_no"
+                            required>
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label class="label">Tax Code (CUI) *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="6859662" id="cui" name="cui"
+                        required>
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</body>
+
+{% include 'base/footer.html' %}

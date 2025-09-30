@@ -1,0 +1,97 @@
+{% include 'base/header.html' %}
+
+<body>
+    <section class="section">
+        <nav>
+            <ul>
+                <li><a class="button is-primary is-outlined"
+                        href="/clients/{{ client_id }}/contracts/{{ contract_id }}/wo">Back</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="container is-max-desktop">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <ul class="notification is-success is-light box">
+                <li>
+                    {{ message }}
+                </li>
+            </ul>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% if error %}
+            <div class="notification is-danger is-light box">
+                Error: {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/clients/{{ client_id }}/contracts/{{ contract_id }}/wo/add" method="post" class="box">
+                <div class="field">
+                    <label class="label" for="name">Name *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="ABC-WO-YYYYMMDD001" id="name" name="name"
+                            required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="final_client">Final Client *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Microsoft" id="final_client" name="final_client"
+                            required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="client_project_code">Client Project Code *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="OP509432859437" id="client_project_code"
+                            name="client_project_code" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="start_date">Start Date *</label>
+                    <div class="control">
+                        <input class="input" type="date" id="start_date" name="start_date" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="end_date">End Date *</label>
+                    <div class="control">
+                        <input class="input" type="date" id="end_date" name="end_date" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Price *</label>
+                    <div class="control">
+                        <input class="input" type="number" step="0.01" placeholder="10.5" id="price" name="price">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="currency">Currency *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Euro" id="currency"
+                            name="currency" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="measurement_unit">Measurement Unit *</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Hourly" id="measurement_unit"
+                            name="measurement_unit" required>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</body>
+
+{% include 'base/footer.html' %}

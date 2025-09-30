@@ -1,0 +1,98 @@
+{% include 'base/header.html' %}
+
+<body>
+    <section class="section">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/dashboard/home">
+                    PFA Manager
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item is-active" style="color: #F2F2F2;" href="#">
+                        Clients
+                    </a>
+
+                    <a class="navbar-item" href="#">
+                        Invoices
+                    </a>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            My Username
+                        </a>
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="#">
+                                Edit
+                            </a>
+                            <a class="navbar-item" href="#">
+                                Settings
+                            </a>
+
+                            <a class="navbar-item" href="/auth/logout">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <hr>
+        <div class="container is-max-desktop">
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="/clients" aria-current="page">Clients</a></li>
+                    <!-- TODO: Add client ID dynamically -->
+                    <li><a href="/clients/2/contracts" aria-current="page">Contracts</a></li>
+                    <li><a href="/clients/2/contracts/1/wo" aria-current="page">Work Orders</a></li>
+                    <li class="is-active"><a href="#" aria-current="page">Activity Reports</a></li>
+                </ul>
+            </nav>
+            <hr>
+            <div class="buttons is-right">
+                <a class="button is-primary" href="ar/add">Add</a>
+            </div>
+            <table class="table is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ar in ar_list %}
+                    <tr>
+                        <th>{{ ar.name }}</th>
+
+                        <td>{{ ar.date }}</td>
+                        <td>{{ ar.hours }}</td>
+                        <td>
+                            <div class="buttons">
+                                <!-- TODO: Use the following style for relative links instead of ones starting with /clients -->
+                                <a class="button is-warning is-small is-rounded" href="ar/{{ ar.id }}/edit">Edit</a>
+                                <a class="button is-danger is-small is-rounded" href="#">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+</body>
+
+{% include 'base/footer.html' %}

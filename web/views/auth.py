@@ -1,9 +1,8 @@
-import functools
 import requests
 import json
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, redirect, render_template, request, session, url_for
 )
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -23,7 +22,7 @@ def add_header(r):
 @bp.route(rule='/signup', methods=('GET', 'POST'))
 def signup():
     error = ""
-    if "auth_token" not in session:
+    if "auth_token" not in session.keys():
         if request.method == 'POST':
             data = request.form
             res: requests.Response = requests.post(url="http://ideacentre.local:8000/signup", data=json.dumps(obj=data))
