@@ -29,15 +29,18 @@
 
             {% if available_items %}
             <form action="/invoices/{{ invoice_id }}/items" method="post" class="box">
+
                 <div class="field">
-                    {% for item in available_items %}
-                    <label class="checkbox">
-                        <input type="checkbox" />
-                        {{ item.name }}
-                    </label>
-                    {% endfor %}
+                    <div class="control">
+                        {% for item in available_items %}
+                        <label class="checkbox">
+                            <input type="checkbox" id="ar_id_{{ item.id }}" name="ar_id_{{ item.id }}" value="{{ item.id }}" />
+                            {{ item.name }}
+                        </label>
+                        {% endfor %}
+                    </div>
                 </div>
-                
+
                 <div class="field is-grouped">
                     <div class="control">
                         <button class="button is-primary">Submit</button>
