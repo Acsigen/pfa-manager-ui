@@ -74,7 +74,7 @@
                         <td>
                             <div class="buttons">
                                 <!-- TODO: the items will be a checkbox form on the add items page -->
-                                <a class="button is-info is-small is-rounded" href="#">View</a>
+                                <a class="button is-info is-small is-rounded" href="{{ invoice.id }}/view" target="_blank">View</a>
                                 {% if invoice.status != "Draft" %} <!-- TODO: Change this to == after development is done -->
                                 <a class="button is-link is-small is-rounded" href="{{ invoice.id}}/items">Add Items</a>
                                 <a class="button is-warning is-small is-rounded" href="{{ invoice.id }}/edit">Edit</a>

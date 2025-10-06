@@ -1,6 +1,7 @@
 # import functools
 import requests
 import json
+from datetime import datetime
 
 from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
@@ -129,7 +130,7 @@ def add_invoice_items(invoice_id: int):
         return render_template(template_name_or_list='invoices/add_items.html', error=error, invoice_id=invoice_id)
     return render_template(template_name_or_list='invoices/add_items.html', error=error, available_items=available_items, invoice_id=invoice_id)
 
-@bp.route(rule='/invoices/<int:invoice_id>/view', methods=['GET'])
+@bp.route(rule='/<int:invoice_id>/view', methods=['GET'])
 def view(invoice_id: int):
     error = ""
     if "auth_token" not in session.keys():
@@ -138,20 +139,27 @@ def view(invoice_id: int):
     headers: dict = {
         "Authorization": f"Bearer {session.get("auth_token")}"
     }
+    # TODO: Get all required data to print the invoice items properly on the invoice
+    # Get the invoice details
     res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}", headers=headers)
     if res.status_code == 200:
         invoice_details: dict = res.json()
-        res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{invoice_details.get("client_id")}", headers=headers)
+        res: requests.Response = requests.post(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}/invoiced_items", json=invoice_details, headers=headers)
         if res.status_code == 200:
-            invoice_details["client_data"] = res.json()
-            return render_template(template_name_or_list='invoices/details.html', error=error, invoice_details=invoice_details)
-            # TODO: also grab invoice items
-        elif res.status_code == 401:
-            session.clear()
-            return redirect(location=url_for(endpoint='auth.login'))
+            invoice_details["invoiced_items"] = res.json()
+            res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{invoice_details.get("client_id")}", headers=headers)
+            if res.status_code == 200:
+                invoice_details["client_data"] = res.json()
+            else:
+                error: str = "Cannot fetch invoice client data"
+                return render_template(template_name_or_list='invoices/details.html', error=error)
         else:
-            error: str = "Cannot display invoice client."
-        return render_template(template_name_or_list='invoices/details.html', error=error)
+            error: str = "Cannot fetch invoice items"
+            return render_template(template_name_or_list='invoices/details.html', error=error)
+        # Format the date and render the template
+        invoice_details["invoice_date"] = datetime.strptime(invoice_details["invoice_date"], '%Y-%m-%d').strftime(format='%d.%m.%Y')
+        invoice_details["due_date"] = datetime.strptime(invoice_details["due_date"], '%Y-%m-%d').strftime(format='%d.%m.%Y')
+        return render_template(template_name_or_list='invoices/details.html', error=error, invoice=invoice_details)
     elif res.status_code == 401:
         session.clear()
         return redirect(location=url_for(endpoint='auth.login'))

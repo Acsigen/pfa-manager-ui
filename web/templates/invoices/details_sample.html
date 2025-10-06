@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PFA Manager UI</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="section">
+        <div class="container is-max-desktop">
+            <!-- {% if error %}
+            <div class="notification is-danger is-light box">
+                Error: {{ error }}
+            </div>
+            {% endif %} -->
+            <table class="table is-striped is-fullwidth is-narrow">
+                <thead>
+                    <tr>
+                        <th>Serie si Numar</th>
+                        <th>Data Emitere</th>
+                        <th>Data Scadenta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>DCA-16-25/SOLO</th>
+                        <td>29.08.2025</td>
+                        <td>29.09.2025</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grid">
+                <div class="card cell">
+                    <div class="card-content">
+                        <div class="content">
+                            <div>Client</div>
+                            <div class="title is-5">FORT S.A.</div>
+                            <div>CUI: RO34836770 </br>
+                                Număr registrul comerțului: J2015009427408 </br>
+                                Adresa: MUNICIPIUL BUCUREŞTI, SECTOR 4, STR ŞERBAN VODĂ, NR.109-111, SPAŢIUL NR. 1,
+                                ET.PARTER </br></br>
+                                Curs BNR EURO/RON la data de 30.09.2025: 5.0811 lei
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card cell">
+                    <div class="card-content">
+                        <div class="content">
+                            <div>Furnizor</div>
+                            <div class="title is-5">ACSINTE DANIEL-CODRUŢ PFA</div>
+                            <div>CUI: 50731600 </br>
+                                Număr registrul comerțului: F2024012574007 </br>
+                                Adresa: B-dul Bucureștii Noi, 136, et. Parter, ap. 5, SECTOR 1, BUCURESTI </br>
+                                Neplătitor de TVA conform art. 310 din Codul Fiscal. </br>
+                                IBAN: RO07 REVO 0000 1669 6231 5657 (RON) Revolut
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table is-striped is-fullwidth is-narrow">
+                <thead>
+                    <tr>
+                        <th>Articol</th>
+                        <th>Cantitate</th>
+                        <th>TVA %</th>
+                        <th>Pret Unitar (lei)</th>
+                        <th>Total Articol (lei)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Servicii cf. AS-2842024/25.10.2024, WO nr. WO-202507-001</th>
+                        <td>7.5 ore</td>
+                        <td>0</td>
+                        <td>126.8</td>
+                        <td>951</td>
+                    </tr>
+                    <tr>
+                        <th>Servicii cf. AS-2842024/25.10.2024, WO nr. WO-202507-001</th>
+                        <td>7.5 ore</td>
+                        <td>0</td>
+                        <td>126.8</td>
+                        <td>951</td>
+                    </tr>
+                    <tr>
+                        <th>Servicii cf. AS-2842024/25.10.2024, WO nr. WO-202507-001</th>
+                        <td>7.5 ore</td>
+                        <td>0</td>
+                        <td>126.8</td>
+                        <td>951</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <div class="is-right" style="text-align: right;">Total fara TVA: <strong>9975.52 RON</strong></div>
+            <div class="is-right" style="text-align: right;">TVA: <strong>0.00 RON</strong></div>
+            <hr>
+            <div style="text-align: right;">Total:</div>
+            <div class="title is-4" style="text-align: right;">9975.52 RON</div>
+        </div>
+
+    </section>
+</body>
+<footer>
+    <script>document.addEventListener('DOMContentLoaded', () => {
+
+            // Get all "navbar-burger" elements
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+
+                });
+            });
+
+        });</script>
+</footer>
+
+</html>

@@ -2,70 +2,94 @@
 
 <body>
     <section class="section">
-        <nav>
-            <ul>
-                <li><a class="button is-primary is-outlined" href="/clients">Back</a></li>
-            </ul>
-        </nav>
-        <hr>
         <div class="container is-max-desktop">
             {% if error %}
             <div class="notification is-danger is-light box">
                 Error: {{ error }}
             </div>
             {% endif %}
-
-            <form class="box">
-                <div class="field">
-                    <label class="label" for="name">Name</label>
-                    <div class="control">
-                        <input class="input" type="text" id="name" name="name" value="{{ client_details.name }}" readonly>
+            {% if invoice %}
+            <table class="table is-striped is-fullwidth is-narrow">
+                <thead>
+                    <tr>
+                        <th>Serie si Numar</th>
+                        <th>Data Emitere</th>
+                        <th>Data Scadenta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>{{ invoice.name }}</th>
+                        <td>{{ invoice.invoice_date }}</td>
+                        <td>{{ invoice.due_date }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grid">
+                <div class="card cell">
+                    <div class="card-content">
+                        <div class="content">
+                            <div>Client</div>
+                            <div class="title is-5">{{ invoice.client_data.name }}</div>
+                            <div>CUI: RO{{ invoice.client_data.cui }} </br>
+                                Număr registrul comerțului: {{ invoice.client_data.onrc_no }} </br>
+                                Adresa: {{ invoice.client_data.address }} </br></br>
+                                Curs BNR EURO/RON la data de {{ invoice.invoice_date }}: {{ invoice.exchange_rate }} {{ invoice.currency }}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="field">
-                    <label class="label" for="address">Address</label>
-                    <div class="control">
-                        <input class="input" type="text" id="address" name="address" value="{{ client_details.address }}" readonly>
+                <div class="card cell">
+                    <div class="card-content">
+                        <div class="content">
+                            <!-- TODO: Get this from the database once enhanced organisation data is implemented -->
+                            <div>Furnizor</div>
+                            <div class="title is-5">ACSINTE DANIEL-CODRUŢ PFA</div>
+                            <div>CUI: 50731600 </br>
+                                Număr registrul comerțului: F2024012574007 </br>
+                                Adresa: B-dul Bucureștii Noi, 136, et. Parter, ap. 5, SECTOR 1, BUCURESTI </br>
+                                Neplătitor de TVA conform art. 310 din Codul Fiscal. </br>
+                                IBAN: RO07 REVO 0000 1669 6231 5657 (RON) Revolut
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="field">
-                    <label class="label">Contact Person</label>
-                    <div class="control">
-                        <input class="input" type="email" id="contact_person"
-                        name="contact_person"  value="{{ client_details.contact_person }}" readonly>
-                    </div>
-                </div>
-                
-                <div class="field">
-                    <label class="label" for="address">Country</label>
-                    <div class="control">
-                        <input class="input" type="text" id="country" name="country" value="{{ client_details.country }}" readonly>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">Phone Number</label>
-                    <div class="control">
-                        <input class="input" type="tel" id="phone_number"
-                            name="phone_number" value="{{ client_details.phone_number }}" readonly>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">ONRC Registration Number</label>
-                    <div class="control">
-                        <input class="input" type="text" id="onrc_no" name="onrc_no" value="{{ client_details.onrc_no }}" readonly>
-                    </div>
-                </div>
-                
-                <div class="field">
-                    <label class="label">Tax Code (CUI)</label>
-                    <div class="control">
-                        <input class="input" type="text" id="cui" name="cui" value="{{ client_details.cui }}" readonly>
-                    </div>
-                </div>
-            </form>
+            </div>
+            <table class="table is-striped is-fullwidth is-narrow">
+                <thead>
+                    <tr>
+                        <th>Articol</th>
+                        <th>Cantitate</th>
+                        <th>TVA %</th>
+                        <th>Pret Unitar (lei)</th>
+                        <th>Total Articol (lei)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set ns = namespace(total=0, vat=0) %}
+                    {% for item in invoice.invoiced_items%}
+                    <tr>
+                        <th>Servicii cf. {{ item.contract_no }}, WO nr. {{ item.wo_name }}</th>
+                        <td>{{ item.hours_amount }} ore</td>
+                        <td>{{ ns.vat * 100 }}</td>
+                        {% if item.currency == invoice.currency %}
+                        <td>{% set unit_price = item.price %} {{ unit_price }}</td>
+                        {% else %}
+                        <td>{% set unit_price = invoice.exchange_rate * item.price %} {{ unit_price | round(2) }}</td>
+                        {% endif %}
+                        <td>{% set total_amount = unit_price * item.hours_amount %} {{ total_amount | round(2) }}</td>
+                    </tr>
+                    {% set ns.total = ns.total + total_amount %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <div class="is-right" style="text-align: right;">Total fara TVA: <strong>{{ ns.total | round(2) }} RON</strong></div>
+            <div class="is-right" style="text-align: right;">TVA: <strong>{{ (ns.vat * ns.total) | round(2) }} RON</strong></div>
+            <hr>
+            <div style="text-align: right;">Total:</div>
+            <div class="title is-4" style="text-align: right;">{{ ns.total | round(2) }} RON</div>
+            {% endif %}
         </div>
 
     </section>
