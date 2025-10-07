@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -38,33 +38,38 @@
 
             <form action="/auth/login" method="post" class="box">
                 <div class="field">
-                    <label class="label">Email</label>
-                    <div class="control">
-                        <input class="input" type="email" placeholder="e.g. john.doe@example.com" id="username"
-                            name="username" required />
-                    </div>
+                    <label class="label">Email
+                        <div class="control">
+                            <input class="input" type="email" placeholder="e.g. john.doe@example.com" id="username"
+                                name="username" required />
+                        </div>
+                    </label>
                 </div>
 
                 <div class="field">
-                    <label class="label">Password</label>
-                    <div class="control">
-                        <input class="input" type="password" placeholder="********" id="password" name="password"
-                            required />
-                    </div>
+                    <label class="label">Password
+                        <div class="control">
+                            <input class="input" type="password" placeholder="********" id="password" name="password"
+                                required />
+                        </div>
+                    </label>
                 </div>
                 <button class="button is-primary">Sign in</button>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             </form>
         </div>
     </section>
 </body>
 <footer>
-    <script>document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
             // Get all "navbar-burger" elements
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            // document.querySelectorAll returns a NodeList, which is iterable
+            const $navbarBurgers = document.querySelectorAll('.navbar-burger');
 
-            // Add a click event on each of them
-            $navbarBurgers.forEach(el => {
+            // Add a click event on each of them using for...of
+            for (const el of $navbarBurgers) { // Iterate directly over the NodeList
                 el.addEventListener('click', () => {
 
                     // Get the target from the "data-target" attribute
@@ -76,9 +81,10 @@
                     $target.classList.toggle('is-active');
 
                 });
-            });
+            }
 
-        });</script>
+        });
+    </script>
 </footer>
 
 </html>

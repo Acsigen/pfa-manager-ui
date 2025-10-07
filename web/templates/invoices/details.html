@@ -12,14 +12,14 @@
             <table class="table is-striped is-fullwidth is-narrow">
                 <thead>
                     <tr>
-                        <th>Serie si Numar</th>
-                        <th>Data Emitere</th>
-                        <th>Data Scadenta</th>
+                        <th scope="col">Serie si Numar</th>
+                        <th scope="col">Data Emitere</th>
+                        <th scope="col">Data Scadenta</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th>{{ invoice.name }}</th>
+                        <th scope="row">{{ invoice.name }}</th>
                         <td>{{ invoice.invoice_date }}</td>
                         <td>{{ invoice.due_date }}</td>
                     </tr>
@@ -58,18 +58,18 @@
             <table class="table is-striped is-fullwidth is-narrow">
                 <thead>
                     <tr>
-                        <th>Articol</th>
-                        <th>Cantitate</th>
-                        <th>TVA %</th>
-                        <th>Pret Unitar (lei)</th>
-                        <th>Total Articol (lei)</th>
+                        <th scope="col">Articol</th>
+                        <th scope="col">Cantitate</th>
+                        <th scope="col">TVA %</th>
+                        <th scope="col">Pret Unitar (lei)</th>
+                        <th scope="col">Total Articol (lei)</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% set ns = namespace(total=0, vat=0) %}
                     {% for item in invoice.invoiced_items%}
                     <tr>
-                        <th>Servicii cf. {{ item.contract_no }}, WO nr. {{ item.wo_name }}</th>
+                        <th scope="row">Servicii cf. {{ item.contract_no }}, WO nr. {{ item.wo_name }}</th>
                         <td>{{ item.hours_amount }} ore</td>
                         <td>{{ ns.vat * 100 }}</td>
                         {% if item.currency == invoice.currency %}

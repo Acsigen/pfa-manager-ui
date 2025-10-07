@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
       tags:
-        - acsigen/pfa-manager-ui:v0.2.0
+        - acsigen/pfa-manager-ui:v0.3.0
         - acsigen/pfa-manager-ui:latest
     container_name: pfa-manager-ui
     restart: unless-stopped
@@ -13,3 +13,6 @@ services:
     tty: true
     ports:
       - 8000:8000
+    environment:
+      - SECRET_KEY
+      - API_URL

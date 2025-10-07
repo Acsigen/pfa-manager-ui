@@ -1,11 +1,14 @@
 import os
 
 from flask import Flask
+from flask_wtf.csrf import CSRFProtect
+
+csrf = CSRFProtect()
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(import_name=__name__, instance_relative_config=True)
-    app.secret_key = b'dev'
+    app.secret_key = os.environ.get('SECRET_KEY', default=os.urandom(24))
 
 
     if test_config is None:
@@ -34,5 +37,7 @@ def create_app(test_config=None):
     @app.route(rule='/health')
     def health_check():
         return 'healthy'
+
+    csrf.init_app(app=app)
 
     return app

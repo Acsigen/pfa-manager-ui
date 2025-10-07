@@ -1,11 +1,14 @@
-# import functools
 import requests
 import json
 from datetime import datetime
+from os import getenv
 
 from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
 )
+
+API_URL: str | None = getenv(key="API_URL", default="http://pfa-manager-api:8000")
+INVOICE_DISPLAY_ERR: str = "Cannot display invoice"
 
 bp = Blueprint(name='invoices', import_name=__name__, url_prefix='/invoices')
 
@@ -15,10 +18,10 @@ def add_header(r):
     Add headers to both force latest IE rendering engine or Chrome Frame,
     and also to cache the rendered page for 10 minutes.
     """
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
+    
     return r
 
 @bp.route(rule='/', methods=['GET'])
@@ -31,10 +34,10 @@ def invoices():
     headers: dict = {
         "Authorization": f"Bearer {session.get("auth_token")}"
     }
-    res: requests.Response = requests.get(url="http://ideacentre.local:8000/api/v1/invoices", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/invoices", headers=headers)
     if res.status_code == 200:
         invoice_list = res.json()
-        res: requests.Response = requests.get(url="http://ideacentre.local:8000/api/v1/clients", headers=headers)
+        res: requests.Response = requests.get(url=f"{API_URL}/api/v1/clients", headers=headers)
         if res.status_code == 200:
             client_list: list[dict] = res.json()
             client_lookup: dict = {client['id']: client['name'] for client in client_list}
@@ -44,10 +47,10 @@ def invoices():
             session.clear()
             return redirect(location=url_for(endpoint='auth.login'))
         else:
-            error: str = "Cannot display invoices"
+            error: str = INVOICE_DISPLAY_ERR
             return render_template(template_name_or_list='invoices/list.html', error=error)
     else:
-        error: str = "Cannot display invoices"
+        error: str = INVOICE_DISPLAY_ERR
         return render_template(template_name_or_list='invoices/list.html', error=error)
     
     return render_template(template_name_or_list='invoices/list.html', error=error, invoice_list=invoice_list)
@@ -62,9 +65,8 @@ def add():
     }
     if request.method == 'POST':
         data: dict = request.form.to_dict()
-        res: requests.Response = requests.post(url="http://ideacentre.local:8000/api/v1/invoices", data=json.dumps(obj=data), headers=headers)
-        # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
-        if res.status_code == 200:
+        res: requests.Response = requests.post(url=f"{API_URL}/api/v1/invoices", data=json.dumps(obj=data), headers=headers)
+        if res.status_code in (200,201):
             flash(message='Invoice Added')
             return redirect(location=url_for(endpoint='invoices.invoices'))
         elif res.status_code == 401:
@@ -72,7 +74,7 @@ def add():
             return redirect(location=url_for(endpoint='auth.login'))
         else:
             error: str = "Cannot register invoice."
-    res: requests.Response = requests.get(url="http://ideacentre.local:8000/api/v1/clients", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/clients", headers=headers)
     if res.status_code == 200:
         client_list: list[dict] = res.json()
     elif res.status_code == 401:
@@ -83,7 +85,6 @@ def add():
         return render_template(template_name_or_list='invoices/new.html', error=error)
     return render_template(template_name_or_list='invoices/new.html', error=error, client_list=client_list)
 
-# TODO: Implement the post method
 @bp.route(rule='/<int:invoice_id>/items', methods=('GET','POST'))
 def add_invoice_items(invoice_id: int):
     error = ""
@@ -99,9 +100,8 @@ def add_invoice_items(invoice_id: int):
                 "invoice_id": invoice_id,
                 "ar_id": ar
             }
-            res: requests.Response = requests.post(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}/items", json=req_data, headers=headers)
-            # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
-            if res.status_code == 200:
+            res: requests.Response = requests.post(url=f"{API_URL}/api/v1/invoices/{invoice_id}/items", json=req_data, headers=headers)
+            if res.status_code in (200, 201):
                 flash(message='Item Added')
                 return redirect(location=url_for(endpoint='invoices.add_invoice_items'))
             elif res.status_code == 401:
@@ -109,16 +109,13 @@ def add_invoice_items(invoice_id: int):
                 return redirect(location=url_for(endpoint='auth.login'))
             else:
                 error: str = "Cannot register items."
-    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/invoices/{invoice_id}", headers=headers)
     if res.status_code == 200:
         invoice: dict = res.json()
         invoice.pop("user_id")
-        res: requests.Response = requests.post(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}/available_items", headers=headers, data=json.dumps(obj=invoice))
+        res: requests.Response = requests.post(url=f"{API_URL}/api/v1/invoices/{invoice_id}/available_items", headers=headers, data=json.dumps(obj=invoice))
         if res.status_code == 200:
             available_items: list = res.json()
-        elif res.status_code == 401:
-            session.clear()
-            return redirect(location=url_for(endpoint='auth.login'))
         else:
             error: str = "Cannot display available items"
             return render_template(template_name_or_list='invoices/add_items.html', error=error)
@@ -126,7 +123,7 @@ def add_invoice_items(invoice_id: int):
         session.clear()
         return redirect(location=url_for(endpoint='auth.login'))
     else:
-        error: str = "Cannot display invoices"
+        error: str = INVOICE_DISPLAY_ERR
         return render_template(template_name_or_list='invoices/add_items.html', error=error, invoice_id=invoice_id)
     return render_template(template_name_or_list='invoices/add_items.html', error=error, available_items=available_items, invoice_id=invoice_id)
 
@@ -139,15 +136,13 @@ def view(invoice_id: int):
     headers: dict = {
         "Authorization": f"Bearer {session.get("auth_token")}"
     }
-    # TODO: Get all required data to print the invoice items properly on the invoice
-    # Get the invoice details
-    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/invoices/{invoice_id}", headers=headers)
     if res.status_code == 200:
         invoice_details: dict = res.json()
-        res: requests.Response = requests.post(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}/invoiced_items", json=invoice_details, headers=headers)
+        res: requests.Response = requests.post(url=f"{API_URL}/api/v1/invoices/{invoice_id}/invoiced_items", json=invoice_details, headers=headers)
         if res.status_code == 200:
             invoice_details["invoiced_items"] = res.json()
-            res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{invoice_details.get("client_id")}", headers=headers)
+            res: requests.Response = requests.get(url=f"{API_URL}/api/v1/clients/{invoice_details.get("client_id")}", headers=headers)
             if res.status_code == 200:
                 invoice_details["client_data"] = res.json()
             else:
@@ -164,7 +159,7 @@ def view(invoice_id: int):
         session.clear()
         return redirect(location=url_for(endpoint='auth.login'))
     else:
-        error: str = "Cannot display invoice."
+        error: str = INVOICE_DISPLAY_ERR
     return render_template(template_name_or_list='invoices/details.html', error=error)
 
 @bp.route(rule='/<int:invoice_id>/edit', methods=('GET','POST'))
@@ -178,9 +173,8 @@ def edit(invoice_id: int):
     }
     if request.method == 'POST':
         data: dict = request.form.to_dict()
-        res: requests.Response = requests.put(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}", data=json.dumps(obj=data), headers=headers)
-        # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
-        if res.status_code == 200 or res.status_code == 201:
+        res: requests.Response = requests.put(url=f"{API_URL}/api/v1/invoices/{invoice_id}", data=json.dumps(obj=data), headers=headers)
+        if res.status_code in (200,201):
             flash(message="Invoice updated")
             return render_template(template_name_or_list='invoices/edit.html', error=error)
         elif res.status_code == 401:
@@ -189,10 +183,10 @@ def edit(invoice_id: int):
         else:
             error: str = res.text
             return render_template(template_name_or_list='invoices/edit.html', error=error)
-    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/invoices/{invoice_id}", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/invoices/{invoice_id}", headers=headers)
     if res.status_code == 200:
         invoice_details: dict = res.json()
-        res: requests.Response = requests.get(url="http://ideacentre.local:8000/api/v1/clients", headers=headers)
+        res: requests.Response = requests.get(url=f"{API_URL}/api/v1/clients", headers=headers)
         if res.status_code == 200:
             client_list: list[dict] = res.json()
         elif res.status_code == 401:
@@ -206,6 +200,6 @@ def edit(invoice_id: int):
         session.clear()
         return redirect(location=url_for(endpoint='auth.login'))
     else:
-        error: str = "Cannot display invoice."
+        error: str = INVOICE_DISPLAY_ERR
     return render_template(template_name_or_list='invoices/edit.html', error=error)
 

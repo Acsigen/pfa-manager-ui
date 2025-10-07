@@ -7,13 +7,13 @@
                 <a class="navbar-item" href="/dashboard/home">
                     PFA Manager
                 </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
+                <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
+                    type="button">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
-                </a>
+                </button>
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu">
@@ -67,21 +67,20 @@
             <table class="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Hours</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Hours</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for ar in ar_list %}
                     <tr>
-                        <th>{{ ar.name }}</th>
+                        <th scope="row">{{ ar.name }}</th>
 
                         <td>{{ ar.date }}</td>
                         <td>{{ ar.hours_amount }}</td>
                         <td>
                             <div class="buttons">
-                                <!-- TODO: Use the following style for relative links instead of ones starting with /clients -->
                                 <a class="button is-warning is-small is-rounded" href="ar/{{ ar.id }}/edit">Edit</a>
                                 <a class="button is-danger is-small is-rounded" href="#">Delete</a>
                             </div>

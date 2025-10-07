@@ -17,54 +17,68 @@
 
             <form class="box">
                 <div class="field">
-                    <label class="label" for="name">Name</label>
-                    <div class="control">
-                        <input class="input" type="text" id="name" name="name" value="{{ client_details.name }}" readonly>
-                    </div>
+                    <label class="label" for="name">Name
+                        <div class="control">
+                            <input class="input" type="text" id="name" name="name" value="{{ client_details.name }}"
+                                readonly>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="address">Address</label>
-                    <div class="control">
-                        <input class="input" type="text" id="address" name="address" value="{{ client_details.address }}" readonly>
-                    </div>
+                    <label class="label" for="address">Address
+                        <div class="control">
+                            <input class="input" type="text" id="address" name="address"
+                                value="{{ client_details.address }}" readonly>
+                        </div>
+                    </label>
                 </div>
 
                 <div class="field">
-                    <label class="label">Contact Person</label>
-                    <div class="control">
-                        <input class="input" type="email" id="contact_person"
-                        name="contact_person"  value="{{ client_details.contact_person }}" readonly>
-                    </div>
-                </div>
-                
-                <div class="field">
-                    <label class="label" for="address">Country</label>
-                    <div class="control">
-                        <input class="input" type="text" id="country" name="country" value="{{ client_details.country }}" readonly>
-                    </div>
+                    <label class="label">Contact Person
+                        <div class="control">
+                            <input class="input" type="email" id="contact_person" name="contact_person"
+                                value="{{ client_details.contact_person }}" readonly>
+                        </div>
+                    </label>
                 </div>
 
                 <div class="field">
-                    <label class="label">Phone Number</label>
-                    <div class="control">
-                        <input class="input" type="tel" id="phone_number"
-                            name="phone_number" value="{{ client_details.phone_number }}" readonly>
-                    </div>
+                    <label class="label" for="address">Country
+                        <div class="control">
+                            <input class="input" type="text" id="country" name="country"
+                                value="{{ client_details.country }}" readonly>
+                        </div>
+                    </label>
                 </div>
 
                 <div class="field">
-                    <label class="label">ONRC Registration Number</label>
-                    <div class="control">
-                        <input class="input" type="text" id="onrc_no" name="onrc_no" value="{{ client_details.onrc_no }}" readonly>
-                    </div>
+                    <label class="label">Phone Number
+                        <div class="control">
+                            <input class="input" type="tel" id="phone_number" name="phone_number"
+                                value="{{ client_details.phone_number }}" readonly>
+                        </div>
+                    </label>
                 </div>
-                
+
                 <div class="field">
-                    <label class="label">Tax Code (CUI)</label>
-                    <div class="control">
-                        <input class="input" type="text" id="cui" name="cui" value="{{ client_details.cui }}" readonly>
-                    </div>
+                    <label class="label">ONRC Registration Number
+                        <div class="control">
+                            <input class="input" type="text" id="onrc_no" name="onrc_no"
+                                value="{{ client_details.onrc_no }}" readonly>
+                        </div>
+                    </label>
                 </div>
+
+                <div class="field">
+                    <label class="label">Tax Code (CUI
+                        <div class="control">
+                            <input class="input" type="text" id="cui" name="cui" value="{{ client_details.cui }}"
+                                readonly>
+                        </div>
+                        )
+                    </label>
+                </div>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             </form>
         </div>
 

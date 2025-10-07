@@ -1,10 +1,13 @@
-# import functools
+
 import requests
 import json
+from os import getenv
 
 from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
 )
+
+API_URL: str | None = getenv(key="API_URL", default="http://pfa-manager-api:8000")
 
 bp = Blueprint(name='contracts', import_name=__name__)
 
@@ -14,10 +17,10 @@ def add_header(r):
     Add headers to both force latest IE rendering engine or Chrome Frame,
     and also to cache the rendered page for 10 minutes.
     """
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
+    
     return r
 
 @bp.route(rule='/clients/<int:client_id>/contracts', methods=['GET'])
@@ -30,7 +33,7 @@ def contracts(client_id: int):
     headers = {
         "Authorization": f"Bearer {session.get("auth_token")}"
     }
-    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/clients/{client_id}/contracts", headers=headers)
     if res.status_code == 200:
         contract_list = res.json()
     elif res.status_code == 401:
@@ -52,9 +55,8 @@ def add(client_id: int):
         headers = {
             "Authorization": f"Bearer {session.get("auth_token")}"
         }
-        res: requests.Response = requests.post(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts", data=json.dumps(obj=data), headers=headers)
-        # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
-        if res.status_code == 200:
+        res: requests.Response = requests.post(url=f"{API_URL}/api/v1/clients/{client_id}/contracts", data=json.dumps(obj=data), headers=headers)
+        if res.status_code in (200,201):
             flash(message='Contract Added')
             return redirect(location=url_for(endpoint='contracts.contracts', client_id=client_id))
         elif res.status_code == 401:
@@ -73,7 +75,7 @@ def view(client_id: int, contract_id: int):
     headers = {
         "Authorization": f"Bearer {session.get("auth_token")}"
     }
-    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts/{contract_id}", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/clients/{client_id}/contracts/{contract_id}", headers=headers)
     if res.status_code == 200:
         client_details: dict = res.json()
         return render_template(template_name_or_list='contracts/details.html', error=error, contract=client_details, client_id=client_id)
@@ -95,9 +97,8 @@ def edit(client_id: int, contract_id: int):
     }
     if request.method == 'POST':
         data = request.form.to_dict()
-        res: requests.Response = requests.put(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts/{contract_id}", data=json.dumps(obj=data), headers=headers)
-        # TODO: Change this once the bug on the API is fixed. It returns 200 instead of 201
-        if res.status_code == 200:
+        res: requests.Response = requests.put(url=f"{API_URL}/api/v1/clients/{client_id}/contracts/{contract_id}", data=json.dumps(obj=data), headers=headers)
+        if res.status_code in (200,201):
             flash(message="Contract updated")
             return render_template(template_name_or_list='contracts/edit.html', error=error, client_id=client_id)
         elif res.status_code == 401:
@@ -107,7 +108,7 @@ def edit(client_id: int, contract_id: int):
             error: str = res.text
             return render_template(template_name_or_list='contractd/edit.html', error=error, client_id=client_id)
         
-    res: requests.Response = requests.get(url=f"http://ideacentre.local:8000/api/v1/clients/{client_id}/contracts/{contract_id}", headers=headers)
+    res: requests.Response = requests.get(url=f"{API_URL}/api/v1/clients/{client_id}/contracts/{contract_id}", headers=headers)
     if res.status_code == 200:
         contract_details: dict = res.json()
         return render_template(template_name_or_list='contracts/edit.html', error=error, contract=contract_details, client_id=client_id)
