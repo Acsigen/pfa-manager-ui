@@ -13,3 +13,6 @@ services:
     tty: true
     ports:
       - 8000:8000
+    environment:
+      - SECRET_KEY
+      - API_URL

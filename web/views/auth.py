@@ -1,9 +1,12 @@
 import requests
 import json
+from os import getenv
 
 from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
 )
+
+API_URL: str | None = getenv(key="API_URL", default="http://pfa-manager-api:8000")
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -13,10 +16,10 @@ def add_header(r):
     Add headers to both force latest IE rendering engine or Chrome Frame,
     and also to cache the rendered page for 10 minutes.
     """
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
+    
     return r
 
 @bp.route(rule='/signup', methods=('GET', 'POST'))
@@ -25,7 +28,7 @@ def signup():
     if "auth_token" not in session.keys():
         if request.method == 'POST':
             data = request.form
-            res: requests.Response = requests.post(url="http://ideacentre.local:8000/signup", data=json.dumps(obj=data))
+            res: requests.Response = requests.post(url=f"{API_URL}/signup", data=json.dumps(obj=data))
             if res.status_code == 201:
                 flash(message='User registered')
                 return redirect(location=url_for(endpoint='auth.signup'))
@@ -45,7 +48,7 @@ def login():
             headers = {
                 "accept": "application/json"
             }
-            res: requests.Response = requests.post(url="http://ideacentre.local:8000/auth", data=data, headers=headers)
+            res: requests.Response = requests.post(url=f"{API_URL}/auth", data=data, headers=headers)
             if res.status_code == 200:
                 session["auth_token"] = res.json()["access_token"]
                 return redirect(location=url_for(endpoint='dashboard.dashboard'))
@@ -59,14 +62,3 @@ def login():
 def logout():
     session.clear()
     return redirect(location=url_for(endpoint='auth.login'))
-
-
-# def login_required(view):
-#     @functools.wraps(view)
-#     def wrapped_view(**kwargs):
-#         if g.user is None:
-#             return redirect(url_for('auth.login'))
-
-#         return view(**kwargs)
-
-#     return wrapped_view

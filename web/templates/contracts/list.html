@@ -7,13 +7,13 @@
                 <a class="navbar-item" href="/dashboard/home">
                     PFA Manager
                 </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
+                <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
+                    type="button">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
-                </a>
+                </button>
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu">
@@ -64,16 +64,16 @@
             <table class="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Contract No.</th>
-                        <th>Description</th>
-                        <th>Cloud Storage URL</th>
-                        <th>Actions</th>
+                        <th scope="col">Contract No.</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Cloud Storage URL</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for contract in contract_list %}
                     <tr>
-                        <th>{{ contract.contract_no }}</th>
+                        <th scope="row">{{ contract.contract_no }}</th>
 
                         <td>{{ contract.description }}</td>
                         <td>

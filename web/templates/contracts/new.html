@@ -29,37 +29,44 @@
 
             <form action="/clients/{{ client_id }}/contracts/add" method="post" class="box">
                 <div class="field">
-                    <label class="label" for="contract_no">Contract No. *</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="AS/186587435/01.01.1970" id="contract_no" name="contract_no" required>
-                    </div>
+                    <label class="label" for="contract_no">Contract No. *
+                        <div class="control">
+                            <input class="input" type="text" placeholder="AS/186587435/01.01.1970" id="contract_no"
+                                name="contract_no" required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="start_date">Start Date *</label>
-                    <div class="control">
-                        <input class="input" type="date" id="start_date" name="start_date" required>
-                    </div>
+                    <label class="label" for="start_date">Start Date *
+                        <div class="control">
+                            <input class="input" type="date" id="start_date" name="start_date" required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="end_date">End Date *</label>
-                    <div class="control">
-                        <input class="input" type="date" id="end_date" name="end_date" required>
-                    </div>
+                    <label class="label" for="end_date">End Date *
+                        <div class="control">
+                            <input class="input" type="date" id="end_date" name="end_date" required>
+                        </div>
+                    </label>
                 </div>
 
                 <div class="field">
-                    <label class="label">Description</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Services for IT audit" id="description"
-                        name="description">
-                    </div>
+                    <label class="label">Description
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Services for IT audit" id="description"
+                                name="description">
+                        </div>
+                    </label>
                 </div>
-                
+
                 <div class="field">
-                    <label class="label" for="cloud_storage_url">Cloud Storage URL</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="https://onedrive.live.com/..." id="cloud_storage_url" name="cloud_storage_url">
-                    </div>
+                    <label class="label" for="cloud_storage_url">Cloud Storage URL
+                        <div class="control">
+                            <input class="input" type="text" placeholder="https://onedrive.live.com/..."
+                                id="cloud_storage_url" name="cloud_storage_url">
+                        </div>
+                    </label>
                 </div>
 
                 <div class="field is-grouped">
@@ -67,6 +74,7 @@
                         <button class="button is-primary">Submit</button>
                     </div>
                 </div>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             </form>
         </div>
 

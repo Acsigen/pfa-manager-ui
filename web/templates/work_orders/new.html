@@ -30,64 +30,72 @@
 
             <form action="/clients/{{ client_id }}/contracts/{{ contract_id }}/wo/add" method="post" class="box">
                 <div class="field">
-                    <label class="label" for="name">Name *</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="ABC-WO-YYYYMMDD001" id="name" name="name"
-                            required>
-                    </div>
+                    <label class="label" for="name">Name *
+                        <div class="control">
+                            <input class="input" type="text" placeholder="ABC-WO-YYYYMMDD001" id="name" name="name"
+                                required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="final_client">Final Client *</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Microsoft" id="final_client" name="final_client"
-                            required>
-                    </div>
+                    <label class="label" for="final_client">Final Client *
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Microsoft" id="final_client"
+                                name="final_client" required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="client_project_code">Client Project Code *</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="OP509432859437" id="client_project_code"
-                            name="client_project_code" required>
-                    </div>
+                    <label class="label" for="client_project_code">Client Project Code *
+                        <div class="control">
+                            <input class="input" type="text" placeholder="OP509432859437" id="client_project_code"
+                                name="client_project_code" required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="start_date">Start Date *</label>
-                    <div class="control">
-                        <input class="input" type="date" id="start_date" name="start_date" required>
-                    </div>
+                    <label class="label" for="start_date">Start Date *
+                        <div class="control">
+                            <input class="input" type="date" id="start_date" name="start_date" required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="end_date">End Date *</label>
-                    <div class="control">
-                        <input class="input" type="date" id="end_date" name="end_date" required>
-                    </div>
+                    <label class="label" for="end_date">End Date *
+                        <div class="control">
+                            <input class="input" type="date" id="end_date" name="end_date" required>
+                        </div>
+                    </label>
                 </div>
 
                 <div class="field">
-                    <label class="label">Price *</label>
-                    <div class="control">
-                        <input class="input" type="number" step="0.01" placeholder="10.5" id="price" name="price">
-                    </div>
+                    <label class="label">Price *
+                        <div class="control">
+                            <input class="input" type="number" step="0.01" placeholder="10.5" id="price" name="price">
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="currency">Currency *</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Euro" id="currency"
-                            name="currency" required>
-                    </div>
+                    <label class="label" for="currency">Currency *
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Euro" id="currency" name="currency" required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="measurement_unit">Measurement Unit *</label>
-                    <div class="control">
-                        <input class="input" type="text" placeholder="Hourly" id="measurement_unit"
-                            name="measurement_unit" required>
-                    </div>
+                    <label class="label" for="measurement_unit">Measurement Unit *
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Hourly" id="measurement_unit"
+                                name="measurement_unit" required>
+                        </div>
+                    </label>
                 </div>
                 <div class="field is-grouped">
                     <div class="control">
                         <button class="button is-primary">Submit</button>
                     </div>
                 </div>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             </form>
         </div>
 

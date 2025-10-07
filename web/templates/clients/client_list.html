@@ -7,13 +7,13 @@
                 <a class="navbar-item" href="/dashboard/home">
                     PFA Manager
                 </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
+                <button class="navbar-burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample" type="button">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
-                </a>
+            </button>
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu">
@@ -63,16 +63,16 @@
             <table class="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>CUI</th>
-                        <th>ONRC</th>
-                        <th>Actions</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">CUI</th>
+                        <th scope="col">ONRC</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for client in client_list %}
                     <tr>
-                        <th>{{ client.name }}</th>
+                        <th scope="row" >{{ client.name }}</th>
 
                         <td>{{ client.cui }}</td>
                         <td>{{ client.onrc_no }}</td>

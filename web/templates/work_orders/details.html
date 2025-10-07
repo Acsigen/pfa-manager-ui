@@ -4,7 +4,8 @@
     <section class="section">
         <nav>
             <ul>
-                <li><a class="button is-primary is-outlined" href="/clients/{{ client_id }}/contracts/{{ contract_id }}/wo">Back</a></li>
+                <li><a class="button is-primary is-outlined"
+                        href="/clients/{{ client_id }}/contracts/{{ contract_id }}/wo">Back</a></li>
             </ul>
         </nav>
         <hr>
@@ -17,67 +18,76 @@
 
             <form class="box">
                 <div class="field">
-                    <label class="label" for="name">Name</label>
-                    <div class="control">
-                        <input class="input" type="text" id="name" name="name" value="{{ wo.name }}"
-                            readonly>
-                    </div>
+                    <label class="label" for="name">Name
+                        <div class="control">
+                            <input class="input" type="text" id="name" name="name" value="{{ wo.name }}" readonly>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="final_client">Final Client</label>
-                    <div class="control">
-                        <input class="input" type="text" id="final_client" name="final_client" value="{{ wo.final_client }}"
-                            readonly>
-                    </div>
+                    <label class="label" for="final_client">Final Client
+                        <div class="control">
+                            <input class="input" type="text" id="final_client" name="final_client"
+                                value="{{ wo.final_client }}" readonly>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="client_project_code">Client Project Code</label>
-                    <div class="control">
-                        <input class="input" type="text" id="client_project_code"
-                            name="client_project_code" value="{{ wo.client_project_code }}" readonly>
-                    </div>
+                    <label class="label" for="client_project_code">Client Project Code
+                        <div class="control">
+                            <input class="input" type="text" id="client_project_code" name="client_project_code"
+                                value="{{ wo.client_project_code }}" readonly>
+                        </div>
+                    </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="start_date">Start Date</label>
-                    <div class="control">
-                        <input class="input" type="date" id="start_date" name="start_date" value="{{ wo.start_date }}" readonly>
-                    </div>
+                    <label class="label" for="start_date">Start Date
+                        <div class="control">
+                            <input class="input" type="date" id="start_date" name="start_date"
+                                value="{{ wo.start_date }}" readonly>
+                    </label>
                 </div>
-                <div class="field">
-                    <label class="label" for="end_date">End Date</label>
-                    <div class="control">
-                        <input class="input" type="date" id="end_date" name="end_date" value="{{ wo.end_date }}" readonly>
-                    </div>
+        </div>
+        <div class="field">
+            <label class="label" for="end_date">End Date
+                <div class="control">
+                    <input class="input" type="date" id="end_date" name="end_date" value="{{ wo.end_date }}" readonly>
                 </div>
+            </label>
+        </div>
 
-                <div class="field">
-                    <label class="label">Price</label>
-                    <div class="control">
-                        <input class="input" type="number" step="0.01" id="price" name="price" value="{{ wo.price }}" readonly>
-                    </div>
+        <div class="field">
+            <label class="label">Price
+                <div class="control">
+                    <input class="input" type="number" step="0.01" id="price" name="price" value="{{ wo.price }}"
+                        readonly>
                 </div>
-                <div class="field">
-                    <label class="label" for="currency">Currency</label>
-                    <div class="control">
-                        <input class="input" type="text" id="currency"
-                            name="currency" value="{{ wo.currency }}" readonly>
-                    </div>
+            </label>
+        </div>
+        <div class="field">
+            <label class="label" for="currency">Currency
+                <div class="control">
+                    <input class="input" type="text" id="currency" name="currency" value="{{ wo.currency }}" readonly>
                 </div>
-                <div class="field">
-                    <label class="label" for="measurement_unit">Measurement Unit</label>
-                    <div class="control">
-                        <input class="input" type="text" id="measurement_unit"
-                            name="measurement_unit" value="{{ wo.measurement_unit }}" readonly>
-                    </div>
+            </label>
+        </div>
+        <div class="field">
+            <label class="label" for="measurement_unit">Measurement Unit
+                <div class="control">
+                    <input class="input" type="text" id="measurement_unit" name="measurement_unit"
+                        value="{{ wo.measurement_unit }}" readonly>
                 </div>
-                <div class="field">
-                    <label class="label" for="status">Status</label>
-                    <div class="control">
-                        <input class="input" type="text" id="status"
-                            name="status" value="{{ wo.status }}" readonly>
-                    </div>
+            </label>
+        </div>
+        <div class="field">
+            <label class="label" for="status">Status
+                <div class="control">
+                    <input class="input" type="text" id="status" name="status" value="{{ wo.status }}" readonly>
                 </div>
-            </form>
+            </label>
+        </div>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        </form>
         </div>
 
     </section>

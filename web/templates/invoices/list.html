@@ -7,13 +7,13 @@
                 <a class="navbar-item" href="/dashboard/home">
                     PFA Manager
                 </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
+                <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
+                    type="button">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
-                </a>
+                </button>
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu">
@@ -57,23 +57,22 @@
             <table class="table is-hoverable is-fullwidth">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Client</th>
-                        <th>Issue Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Issue Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for invoice in invoice_list %}
                     <tr>
-                        <th>{{ invoice.name }}</th>
+                        <th scope="row">{{ invoice.name }}</th>
                         <td>{{ invoice.client_name }}</td>
                         <td>{{ invoice.invoice_date }}</td>
                         <td>{{ invoice.status }}</td>
                         <td>
                             <div class="buttons">
-                                <!-- TODO: the items will be a checkbox form on the add items page -->
                                 <a class="button is-info is-small is-rounded" href="{{ invoice.id }}/view" target="_blank">View</a>
                                 {% if invoice.status != "Draft" %} <!-- TODO: Change this to == after development is done -->
                                 <a class="button is-link is-small is-rounded" href="{{ invoice.id}}/items">Add Items</a>

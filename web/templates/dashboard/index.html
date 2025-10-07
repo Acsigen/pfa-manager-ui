@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -15,13 +15,13 @@
                 <a class="navbar-item" href="#">
                     PFA Manager
                 </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
+                <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
+                    type="button">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
-                </a>
+                </button>
             </div>
 
             <div id="navbarBasicExample" class="navbar-menu">
@@ -66,13 +66,15 @@
     </section>
 </body>
 <footer>
-    <script>document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
             // Get all "navbar-burger" elements
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            // document.querySelectorAll returns a NodeList, which is iterable
+            const $navbarBurgers = document.querySelectorAll('.navbar-burger');
 
-            // Add a click event on each of them
-            $navbarBurgers.forEach(el => {
+            // Add a click event on each of them using for...of
+            for (const el of $navbarBurgers) { // Iterate directly over the NodeList
                 el.addEventListener('click', () => {
 
                     // Get the target from the "data-target" attribute
@@ -84,8 +86,9 @@
                     $target.classList.toggle('is-active');
 
                 });
-            });
+            }
 
-        });</script>
+        });
+    </script>
 </footer>
 </html>
