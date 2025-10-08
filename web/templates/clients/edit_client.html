@@ -27,7 +27,7 @@
             </div>
             {% endif %}
             {% if client_details %}
-            <form action="/clients/{{ client_details.id }}/edit" method="post" class="box">
+            <form action="edit" method="post" class="box">
                 <div class="field">
                     <label class="label" for="name">Name *
                         <div class="control">
@@ -89,7 +89,22 @@
                         </div>
                     </label>
                 </div>
-
+                <div class="field">
+                    <label class="label">Work Order Sign URL
+                        <div class="control">
+                            <input class="input" type="text" placeholder="https://sign.adobe.com/abc"
+                                id="wo_sign_template" name="wo_sign_template" value="{{ client_details.wo_sign_template }}">
+                        </div>
+                    </label>
+                </div>
+                <div class="field">
+                    <label class="label">Acceptance Report Sign URL
+                        <div class="control">
+                            <input class="input" type="text" placeholder="https://sign.adobe.com/abc"
+                                id="pv_sign_template" name="pv_sign_template" value="{{ client_details.pv_sign_template }}">
+                        </div>
+                    </label>
+                </div>
                 <div class="field is-grouped">
                     <div class="control">
                         <button class="button is-primary">Submit</button>

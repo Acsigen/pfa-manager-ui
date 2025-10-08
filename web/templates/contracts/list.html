@@ -18,11 +18,11 @@
 
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item is-active" style="color: #F2F2F2;" href="#">
+                    <a class="navbar-item is-active" style="color: #F2F2F2;" href="/clients">
                         Clients
                     </a>
 
-                    <a class="navbar-item" href="#">
+                    <a class="navbar-item" href="/invoices">
                         Invoices
                     </a>
                 </div>
@@ -54,12 +54,12 @@
             <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul>
                     <li><a href="/clients" aria-current="page">Clients</a></li>
-                    <li class="is-active"><a href="/clients/2/contracts" aria-current="page">Contracts</a></li>
+                    <li class="is-active"><a href="#" aria-current="page">Contracts</a></li>
                 </ul>
             </nav>
             <hr>
             <div class="buttons is-right">
-                <a class="button is-primary" href="/clients/{{ client_id }}/contracts/add">Add</a>
+                <a class="button is-primary" href="contracts/add">Add</a>
             </div>
             <table class="table is-hoverable is-fullwidth">
                 <thead>
@@ -82,9 +82,9 @@
                         </td>
                         <td>
                             <div class="buttons">
-                                <a class="button is-link is-small is-rounded" href="/clients/{{ contract.client_id }}/contracts/{{ contract.id }}/wo">Work Orders</a>
-                                <a class="button is-info is-small is-rounded" href="/clients/{{ contract.client_id }}/contracts/{{ contract.id }}/view">View</a>
-                                <a class="button is-warning is-small is-rounded" href="/clients/{{ contract.client_id }}/contracts/{{ contract.id }}/edit">Edit</a>
+                                <a class="button is-link is-small is-rounded" href="contracts/{{ contract.id }}/wo">Work Orders</a>
+                                <a class="button is-info is-small is-rounded" href="contracts/{{ contract.id }}/view">View</a>
+                                <a class="button is-warning is-small is-rounded" href="contracts/{{ contract.id }}/edit">Edit</a>
                                 <a class="button is-danger is-small is-rounded" href="#">Delete</a>
                             </div>
                         </td>

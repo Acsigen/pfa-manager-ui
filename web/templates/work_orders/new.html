@@ -76,17 +76,27 @@
                     </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="currency">Currency *
+                    <label class="label">Currency *
                         <div class="control">
-                            <input class="input" type="text" placeholder="Euro" id="currency" name="currency" required>
+                            <div class="select">
+                                <select id="currency" name="currency">
+                                    <option>Euro</option>
+                                    <option>Lei</option>
+                                    <option>USD</option>
+                                </select>
+                            </div>
                         </div>
                     </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="measurement_unit">Measurement Unit *
+                    <label class="label">Measurement Unit *
                         <div class="control">
-                            <input class="input" type="text" placeholder="Hourly" id="measurement_unit"
-                                name="measurement_unit" required>
+                            <div class="select">
+                                <select id="measurement_unit" name="measurement_unit">
+                                    <option>Hourly</option>
+                                    <option>Project Based</option>
+                                </select>
+                            </div>
                         </div>
                     </label>
                 </div>
