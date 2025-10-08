@@ -61,8 +61,8 @@
                         <th scope="col">Articol</th>
                         <th scope="col">Cantitate</th>
                         <th scope="col">TVA %</th>
-                        <th scope="col">Pret Unitar (lei)</th>
-                        <th scope="col">Total Articol (lei)</th>
+                        <th scope="col">Pret Unitar ({{ invoice.currency }})</th>
+                        <th scope="col">Total Articol ({{ invoice.currency }})</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,11 +84,11 @@
                 </tbody>
             </table>
             <hr>
-            <div class="is-right" style="text-align: right;">Total fara TVA: <strong>{{ ns.total | round(2) }} RON</strong></div>
-            <div class="is-right" style="text-align: right;">TVA: <strong>{{ (ns.vat * ns.total) | round(2) }} RON</strong></div>
+            <div class="is-right" style="text-align: right;">Total fara TVA: <strong>{{ ns.total | round(2) }} {{ invoice.currency }}</strong></div>
+            <div class="is-right" style="text-align: right;">TVA: <strong>{{ (ns.vat * ns.total) | round(2) }} {{ invoice.currency }}</strong></div>
             <hr>
             <div style="text-align: right;">Total:</div>
-            <div class="title is-4" style="text-align: right;">{{ ns.total | round(2) }} RON</div>
+            <div class="title is-4" style="text-align: right;">{{ ns.total | round(2) }} {{ invoice.currency }}</div>
             {% endif %}
         </div>
 

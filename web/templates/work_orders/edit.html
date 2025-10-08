@@ -80,18 +80,47 @@
                     </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="currency">Currency *
+                    <label class="label">Currency *
                         <div class="control">
-                            <input class="input" type="text" id="currency" name="currency" value="{{ wo.currency }}"
-                                required>
+                            <div class="select">
+                                <select id="currency" name="currency">
+                                    {% if wo.currency == "Euro" %}
+                                    <option selected="selected">Euro</option>
+                                    {% else %}
+                                    <option>Euro</option>
+                                    {% endif %}
+                                    {% if wo.currency == "Lei" %}
+                                    <option selected="selected">Lei</option>
+                                    {% else %}
+                                    <option>Lei</option>
+                                    {% endif %}
+                                    {% if wo.currency == "USD" %}
+                                    <option selected="selected">USD</option>
+                                    {% else %}
+                                    <option>USD</option>
+                                    {% endif %}
+                                </select>
+                            </div>
                         </div>
                     </label>
                 </div>
                 <div class="field">
-                    <label class="label" for="measurement_unit">Measurement Unit *
+                    <label class="label">Measurement Unit *
                         <div class="control">
-                            <input class="input" type="text" id="measurement_unit" name="measurement_unit"
-                                value="{{ wo.measurement_unit }}" required>
+                            <div class="select">
+                                <select id="measurement_unit" name="measurement_unit">
+                                    {% if wo.measurement_unit == "Hourly" %}
+                                    <option selected="selected">Hourly</option>
+                                    {% else %}
+                                    <option>Hourly</option>
+                                    {% endif %}
+                                    {% if wo.measurement_unit == "Project Based" %}
+                                    <option selected="selected">Project Based</option>
+                                    {% else %}
+                                    <option>Project Based</option>
+                                    {% endif %}
+                                </select>
+                            </div>
                         </div>
                     </label>
                 </div>

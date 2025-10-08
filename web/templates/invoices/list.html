@@ -74,10 +74,12 @@
                         <td>
                             <div class="buttons">
                                 <a class="button is-info is-small is-rounded" href="{{ invoice.id }}/view" target="_blank">View</a>
-                                {% if invoice.status != "Draft" %} <!-- TODO: Change this to == after development is done -->
+                                {% if invoice.status == "Draft" %}
                                 <a class="button is-link is-small is-rounded" href="{{ invoice.id}}/items">Add Items</a>
-                                <a class="button is-warning is-small is-rounded" href="{{ invoice.id }}/edit">Edit</a>
                                 <a class="button is-danger is-small is-rounded" href="#">Delete</a>
+                                {% endif %}
+                                {% if invoice.status == "Draft" or invoice.status == "Issued" %}
+                                <a class="button is-warning is-small is-rounded" href="{{ invoice.id }}/edit">Edit</a>
                                 {% endif %}
                             </div>
                         </td>

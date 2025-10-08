@@ -58,7 +58,7 @@
             </nav>
             <hr>
             <div class="buttons is-right">
-                <a class="button is-primary" href="/clients/add">Add</a>
+                <a class="button is-primary" href="add">Add</a>
             </div>
             <table class="table is-hoverable is-fullwidth">
                 <thead>
@@ -82,6 +82,8 @@
                                 <a class="button is-info is-small is-rounded" href="/clients/{{ client.id }}/view">View</a>
                                 <a class="button is-warning is-small is-rounded" href="/clients/{{ client.id }}/edit">Edit</a>
                                 <a class="button is-danger is-small is-rounded" href="#">Delete</a>
+                                <a class="button is-link is-small is-rounded is-outlined" href="{{ client.wo_sign_template }}" target="_blank">Sign Work Order</a>
+                                <a class="button is-link is-small is-rounded is-outlined" href="{{ client.pv_sign_template }}" target="_blank">Sign Acceptance Report</a>
                             </div>
                         </td>
                     </tr>
