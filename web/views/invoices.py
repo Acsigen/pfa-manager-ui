@@ -103,7 +103,7 @@ def add_invoice_items(invoice_id: int):
             res: requests.Response = requests.post(url=f"{API_URL}/api/v1/invoices/{invoice_id}/items", json=req_data, headers=headers)
             if res.status_code in (200, 201):
                 flash(message='Item Added')
-                return redirect(location=url_for(endpoint='invoices.add_invoice_items'))
+                return redirect(location=url_for(endpoint='invoices.add_items'))
             elif res.status_code == 401:
                 session.clear()
                 return redirect(location=url_for(endpoint='auth.login'))
